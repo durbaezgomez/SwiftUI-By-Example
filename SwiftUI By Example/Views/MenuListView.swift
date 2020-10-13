@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListView: View {
+struct MenuListView: View {
     let menu = Bundle.main.decode([MenuSection].self, from: "menu.json")
     
     var body: some View {
@@ -27,8 +27,8 @@ struct ListView: View {
     }
 }
 
-struct ListView_Previews: PreviewProvider {
+struct MenuListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView()
+        MenuListView()
     }
 }
