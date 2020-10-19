@@ -31,6 +31,8 @@ struct CheckoutView: View {
         return total + tipValue
     }
     
+    @State private var showingPaymentAlert = false
+    
     var body: some View {
         VStack {
             Section {
@@ -57,9 +59,12 @@ struct CheckoutView: View {
                                 Text("TOTAL: $\(totalPrice, specifier: "%.2f")")
                     ) {
                         Button("Confirm order") {
-                            // place the order
+                            self.showingPaymentAlert.toggle()
                         }
                     }
+                }
+                .alert(isPresented: $showingPaymentAlert) {
+                    Alert(title: Text("Order confirmed"), message: Text("Your total was $\(totalPrice, specifier: "%.2f") – thank you!"), dismissButton: .default(Text("OK")))
                 }
             }
         }
