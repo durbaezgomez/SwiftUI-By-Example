@@ -13,6 +13,12 @@ enum PaymentType: String {
     case points = "iDine Points"
 }
 
+enum PickupTime: String {
+    case now = "Now"
+    case evening = "Today evening"
+    case tomorrowMorning = "Tomorrow morning"
+}
+
 struct CheckoutView: View {
     @EnvironmentObject var order: Order
     
@@ -24,6 +30,9 @@ struct CheckoutView: View {
     
     static let tipAmounts = [10, 15, 20, 25, 0]
     @State private var tipAmount = 1
+    
+    static let pickupTimes: [PickupTime] = [.now, .evening, .tomorrowMorning]
+    @State private var pickupTime: PickupTime = .now
     
     var totalPrice: Double {
         let total = Double(order.total)
@@ -54,6 +63,11 @@ struct CheckoutView: View {
                                 Text("\(Self.tipAmounts[$0])%")
                             }
                         }.pickerStyle(SegmentedPickerStyle())
+                    }
+                    Picker("Pickup time?", selection: $pickupTime) {
+                        ForEach(Self.pickupTimes, id: \.self) {
+                            Text($0.rawValue)
+                        }
                     }
                     Section(header:
                                 Text("TOTAL: $\(totalPrice, specifier: "%.2f")")
